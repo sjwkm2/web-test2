@@ -179,6 +179,7 @@
       color: var(--text);
       white-space: nowrap;
       margin-right: 24px;
+      flex-shrink: 0;
     }
 
     .nav-brand-icon {
@@ -205,14 +206,18 @@
       height: 20px;
       background: var(--border);
       margin-right: 24px;
+      flex-shrink: 0;
     }
 
-    .nav-menu { display: flex; gap: 2px; }
+    /* 데스크탑: 남은 공간 균등 배분 */
+    .nav-menu { display: flex; gap: 2px; flex: 1; }
 
     .nav-item {
+      flex: 1;
+      text-align: center;
       background: none;
       border: none;
-      padding: 8px 16px;
+      padding: 8px 8px;
       font-size: 0.875rem;
       font-weight: 500;
       color: var(--muted);
@@ -226,6 +231,38 @@
 
     .nav-item:hover  { background: var(--accent-lt); color: var(--text); }
     .nav-item.active { background: var(--accent-lt); color: var(--accent); font-weight: 700; }
+
+    /* ── 햄버거 버튼 (모바일 전용) ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      margin-left: auto;
+      flex-shrink: 0;
+      border-radius: var(--radius-sm);
+      transition: var(--transition-base);
+    }
+
+    .nav-hamburger:hover { background: var(--accent-lt); }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: var(--transition-base);
+      transform-origin: center;
+    }
+
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* ── 페이지 전환 ── */
     @keyframes pageIn {
@@ -1050,13 +1087,63 @@
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* ── 반응형 ── */
-    @media (max-width: 700px) {
+
+    /* 태블릿: 브랜드 서브텍스트 축소 */
+    @media (max-width: 900px) {
+      .nav-brand-sub { display: none; }
+      .nav-item { font-size: 0.82rem; padding: 8px 4px; }
+    }
+
+    /* 모바일: 햄버거 메뉴 */
+    @media (max-width: 640px) {
+      /* 상단바 간소화 */
+      .topbar-sep,
+      .topbar-left .topbar-tag:nth-child(3) { display: none; }
+
+      /* 네비 레이아웃 변경 */
+      .nav-divider { display: none; }
+      .nav-brand-text { display: none; }
+      .nav-brand { margin-right: auto; }
+
+      /* 수평 메뉴 숨기고 드롭다운으로 전환 */
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        flex-direction: column;
+        gap: 4px;
+        background: var(--surface);
+        border-bottom: 2px solid var(--border);
+        box-shadow: var(--shadow-lg);
+        padding: 10px 12px 14px;
+        z-index: 99;
+      }
+
+      .nav-menu.open { display: flex; }
+
+      .nav-item {
+        flex: none;
+        text-align: left;
+        padding: 12px 16px;
+        font-size: 0.9rem;
+        border-radius: var(--radius-sm);
+      }
+
+      /* 햄버거 버튼 표시 */
+      .nav-hamburger { display: flex; }
+
+      /* 콘텐츠 영역 */
+      .section-wrap { padding: 28px 16px; }
+      .card { padding: 36px 20px; }
       .schedule-grid { grid-template-columns: 1fr; }
       .ref-grid { grid-template-columns: 1fr; }
-      .card { padding: 40px 24px; }
-      .nav-brand-text { display: none; }
-      .topbar-sep, .topbar-left .topbar-tag:nth-child(3) { display: none; }
-      .section-wrap { padding: 32px 16px; }
+
+      /* 게시판 모바일: 날짜·조회 열 숨김 */
+      .board-table th:nth-child(3),
+      .board-table td:nth-child(3),
+      .board-table th:nth-child(4),
+      .board-table td:nth-child(4) { display: none; }
     }
   </style>
 </head>
@@ -1084,13 +1171,16 @@
       </div>
     </div>
     <div class="nav-divider"></div>
-    <div class="nav-menu">
+    <div class="nav-menu" id="navMenu">
       <button class="nav-item active" data-page="intro">소개</button>
       <button class="nav-item" data-page="schedule">일정</button>
       <button class="nav-item" data-page="skills">보유스킬</button>
       <button class="nav-item" data-page="reference">레퍼런스</button>
       <button class="nav-item" data-page="board">게시판</button>
     </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="메뉴 열기" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- ══════════════════════════════════
@@ -1472,12 +1562,33 @@
 
     /* ── 2. 네비게이션 ── */
     const navItems = document.querySelectorAll('.nav-item');
+    const navMenu = document.getElementById('navMenu');
+    const hamburger = document.getElementById('navHamburger');
+
+    function closeHamburger() {
+      hamburger.classList.remove('open');
+      navMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+
+    // 바깥 클릭 시 메뉴 닫기
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.topnav')) closeHamburger();
+    });
+
     navItems.forEach(btn => {
       btn.addEventListener('click', () => {
         navItems.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById('page-' + btn.dataset.page).classList.add('active');
+        closeHamburger();
       });
     });
 
