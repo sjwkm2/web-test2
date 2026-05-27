@@ -125,6 +125,131 @@
     }
     .theme-toggle:hover { background: rgba(255,255,255,0.16); color: #fff; }
 
+    .login-btn {
+      background: var(--gold);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 14px;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 0.03em;
+      transition: var(--transition-base);
+      white-space: nowrap;
+    }
+    .login-btn:hover { opacity: 0.85; }
+
+    .user-chip {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: var(--radius-sm);
+      padding: 3px 10px;
+      font-size: 11px; color: rgba(255,255,255,0.88);
+      letter-spacing: 0.02em;
+    }
+    .user-chip-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: #4ade80; flex-shrink: 0;
+    }
+    .logout-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: var(--radius-sm);
+      color: rgba(255,255,255,0.7);
+      font-size: 11px; font-weight: 600;
+      padding: 3px 10px;
+      cursor: pointer; font-family: inherit;
+      transition: var(--transition-base); white-space: nowrap;
+    }
+    .logout-btn:hover { background: rgba(255,0,0,0.2); color: #fff; border-color: rgba(255,100,100,0.4); }
+
+    /* ── 인증 모달 ── */
+    .auth-overlay {
+      position: fixed; inset: 0;
+      background: rgba(10,20,40,0.6);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 500; padding: 20px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.22s;
+    }
+    .auth-overlay.open { opacity: 1; pointer-events: all; }
+
+    .auth-modal {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-xl); padding: 36px 40px;
+      max-width: 400px; width: 100%;
+      box-shadow: var(--shadow-xl);
+      transform: translateY(24px) scale(0.96);
+      transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), opacity 0.22s;
+      opacity: 0; position: relative;
+    }
+    .auth-overlay.open .auth-modal { transform: translateY(0) scale(1); opacity: 1; }
+
+    .auth-modal-close {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--subtle); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); color: var(--muted);
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 0.85rem; transition: var(--transition-base);
+    }
+    .auth-modal-close:hover { background: #fee2e2; color: #dc2626; border-color: #fca5a5; }
+
+    .auth-logo {
+      width: 44px; height: 44px; border-radius: var(--radius-md);
+      background: var(--primary-gradient);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 0.65rem; font-weight: 800;
+      margin: 0 auto 16px; letter-spacing: -0.3px;
+    }
+
+    .auth-title { font-size: 1.2rem; font-weight: 800; color: var(--text); text-align: center; margin-bottom: 4px; letter-spacing: -0.025em; }
+    .auth-sub   { font-size: 0.78rem; color: var(--muted); text-align: center; margin-bottom: 24px; }
+
+    .auth-tabs {
+      display: flex; gap: 2px;
+      background: var(--subtle); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 3px; margin-bottom: 22px;
+    }
+    .auth-tab {
+      flex: 1; text-align: center; background: none; border: none;
+      padding: 7px; font-size: 0.83rem; font-weight: 500;
+      color: var(--muted); border-radius: 6px;
+      cursor: pointer; transition: var(--transition-base); font-family: inherit;
+    }
+    .auth-tab.active { background: var(--surface); color: var(--accent); font-weight: 700; box-shadow: var(--shadow-sm); }
+
+    .auth-field { margin-bottom: 14px; }
+    .auth-field label { display: block; font-size: 0.67rem; font-weight: 700; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .auth-field input {
+      width: 100%; border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 10px 14px;
+      font-size: 0.88rem; color: var(--text); font-family: inherit;
+      background: var(--subtle); transition: var(--transition-base);
+    }
+    .auth-field input:focus { outline: none; border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px rgba(27,42,74,0.08); }
+    [data-theme="dark"] .auth-field input:focus { box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+
+    .auth-error {
+      font-size: 0.78rem; color: #dc2626; background: #fee2e2;
+      border: 1px solid #fca5a5; border-radius: var(--radius-sm);
+      padding: 8px 12px; margin-bottom: 14px; display: none;
+    }
+    .auth-error.show { display: block; }
+    [data-theme="dark"] .auth-error { background: #3d0f0f; border-color: #7f1d1d; color: #fca5a5; }
+
+    .auth-submit {
+      width: 100%; background: var(--accent); color: #fff; border: none;
+      padding: 11px; border-radius: var(--radius-md);
+      font-size: 0.9rem; font-weight: 700; cursor: pointer;
+      font-family: inherit; transition: var(--transition-base); letter-spacing: -0.01em;
+    }
+    .auth-submit:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    .auth-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
     /* ── 메인 네비게이션 ── */
     .topnav {
       position: fixed;
@@ -845,6 +970,14 @@
     </div>
     <div class="topbar-right">
       <button class="theme-toggle" id="themeToggle">🌙 다크모드</button>
+      <!-- 비로그인 -->
+      <button class="login-btn" id="loginBtn">로그인</button>
+      <!-- 로그인 후 (기본 숨김) -->
+      <div class="user-chip" id="userChip" style="display:none">
+        <span class="user-chip-dot"></span>
+        <span id="userEmail"></span>
+      </div>
+      <button class="logout-btn" id="logoutBtn" style="display:none">로그아웃</button>
     </div>
   </div>
 
@@ -1186,7 +1319,7 @@
 
       <div class="board-toolbar">
         <span class="board-count" id="boardCount"></span>
-        <button class="btn-primary" id="btnWrite">✏️ 글쓰기</button>
+        <button class="btn-primary" id="btnWrite" style="display:none">✏️ 글쓰기</button>
       </div>
       <table class="board-table" id="boardTable">
         <thead>
@@ -1239,6 +1372,38 @@
         <button class="btn-cancel" id="writeCancelBtn">취소</button>
         <button class="btn-primary" id="writeSubmitBtn">등록</button>
       </div>
+    </div>
+  </div>
+
+  <!-- ── 인증 모달 ── -->
+  <div class="auth-overlay" id="authOverlay">
+    <div class="auth-modal">
+      <button class="auth-modal-close" id="authClose">✕</button>
+      <div class="auth-logo">IT<br>가이드</div>
+      <div class="auth-title">IT개발 가이드 포털</div>
+      <div class="auth-sub">이메일로 로그인하세요</div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-auth="login">로그인</button>
+        <button class="auth-tab" data-auth="signup">회원가입</button>
+      </div>
+
+      <div id="authError" class="auth-error"></div>
+
+      <div class="auth-field">
+        <label>이메일</label>
+        <input type="email" id="authEmail" placeholder="example@email.com" autocomplete="email" />
+      </div>
+      <div class="auth-field">
+        <label>비밀번호</label>
+        <input type="password" id="authPassword" placeholder="6자 이상 입력" autocomplete="current-password" />
+      </div>
+      <div class="auth-field" id="authPasswordConfirmWrap" style="display:none">
+        <label>비밀번호 확인</label>
+        <input type="password" id="authPasswordConfirm" placeholder="비밀번호 재입력" autocomplete="new-password" />
+      </div>
+
+      <button class="auth-submit" id="authSubmit">로그인</button>
     </div>
   </div>
 
@@ -1819,7 +1984,139 @@ REQ-DATA-020 백업 및 보존 정책
     // 대시보드 탭 클릭 시 렌더링
     document.querySelector('[data-page="dashboard"]').addEventListener('click', renderDashboard);
 
-    /* ── 8. 글쓰기 모달 (Supabase insert) ── */
+    /* ── 8. 인증 (Supabase Auth) ── */
+    let currentUser = null;
+    const authOverlay  = document.getElementById('authOverlay');
+    const authError    = document.getElementById('authError');
+    const authSubmit   = document.getElementById('authSubmit');
+    const authEmailEl  = document.getElementById('authEmail');
+    const authPwEl     = document.getElementById('authPassword');
+    const authPwCfEl   = document.getElementById('authPasswordConfirm');
+    const authPwCfWrap = document.getElementById('authPasswordConfirmWrap');
+    let authMode = 'login';
+
+    function showAuthError(msg) {
+      authError.textContent = msg;
+      authError.classList.add('show');
+    }
+    function clearAuthError() { authError.classList.remove('show'); }
+
+    function openAuthModal() {
+      clearAuthError();
+      authEmailEl.value = '';
+      authPwEl.value    = '';
+      authPwCfEl.value  = '';
+      authOverlay.classList.add('open');
+      setTimeout(() => authEmailEl.focus(), 280);
+    }
+    function closeAuthModal() { authOverlay.classList.remove('open'); }
+
+    // 탭 전환
+    document.querySelectorAll('.auth-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        authMode = tab.dataset.auth;
+        clearAuthError();
+        authPwCfEl.value = '';
+        authPwCfWrap.style.display = authMode === 'signup' ? 'block' : 'none';
+        authSubmit.textContent     = authMode === 'signup' ? '회원가입' : '로그인';
+        document.querySelector('.auth-sub').textContent =
+          authMode === 'signup' ? '이메일로 계정을 만드세요' : '이메일로 로그인하세요';
+      });
+    });
+
+    // 로그인/회원가입 제출
+    authSubmit.addEventListener('click', async () => {
+      if (!sb) { showAuthError('Supabase가 연결되지 않았습니다.'); return; }
+      const email    = authEmailEl.value.trim();
+      const password = authPwEl.value;
+      const pwCf     = authPwCfEl.value;
+      if (!email)    { showAuthError('이메일을 입력해주세요.'); return; }
+      if (!password) { showAuthError('비밀번호를 입력해주세요.'); return; }
+      if (authMode === 'signup') {
+        if (password.length < 6)   { showAuthError('비밀번호는 6자 이상이어야 합니다.'); return; }
+        if (password !== pwCf)     { showAuthError('비밀번호가 일치하지 않습니다.'); return; }
+      }
+      authSubmit.disabled = true;
+      authSubmit.textContent = '처리 중...';
+      clearAuthError();
+
+      try {
+        if (authMode === 'login') {
+          const { error } = await sb.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+          closeAuthModal();
+          showToast('✅ 로그인됐습니다!');
+        } else {
+          const { error } = await sb.auth.signUp({ email, password });
+          if (error) throw error;
+          showToast('📧 가입 확인 이메일을 발송했습니다. 이메일을 확인해 주세요.');
+          closeAuthModal();
+        }
+      } catch(e) {
+        const msg = e.message || '';
+        if (msg.includes('Invalid login'))        showAuthError('이메일 또는 비밀번호가 올바르지 않습니다.');
+        else if (msg.includes('already registered')) showAuthError('이미 가입된 이메일입니다.');
+        else if (msg.includes('Email not confirmed')) showAuthError('이메일 인증이 필요합니다. 받은 편지함을 확인해 주세요.');
+        else showAuthError(msg || '오류가 발생했습니다. 다시 시도해주세요.');
+      } finally {
+        authSubmit.disabled = false;
+        authSubmit.textContent = authMode === 'signup' ? '회원가입' : '로그인';
+      }
+    });
+
+    // Enter 키 제출
+    [authEmailEl, authPwEl, authPwCfEl].forEach(el => {
+      el.addEventListener('keydown', e => { if (e.key === 'Enter') authSubmit.click(); });
+    });
+
+    document.getElementById('loginBtn').addEventListener('click', openAuthModal);
+    document.getElementById('authClose').addEventListener('click', closeAuthModal);
+    authOverlay.addEventListener('click', e => { if (e.target === authOverlay) closeAuthModal(); });
+
+    // 로그아웃
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      if (!sb) return;
+      await sb.auth.signOut();
+      showToast('👋 로그아웃됐습니다.');
+    });
+
+    // 로그인 상태 UI 업데이트
+    function updateAuthUI(user) {
+      currentUser = user;
+      const loginBtn  = document.getElementById('loginBtn');
+      const userChip  = document.getElementById('userChip');
+      const userEmail = document.getElementById('userEmail');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const btnWrite  = document.getElementById('btnWrite');
+
+      if (user) {
+        loginBtn.style.display  = 'none';
+        userChip.style.display  = 'inline-flex';
+        logoutBtn.style.display = 'inline-block';
+        userEmail.textContent   = user.email.length > 18
+          ? user.email.slice(0, 15) + '...' : user.email;
+        btnWrite.style.display  = 'block';
+      } else {
+        loginBtn.style.display  = 'inline-block';
+        userChip.style.display  = 'none';
+        logoutBtn.style.display = 'none';
+        btnWrite.style.display  = 'none';
+      }
+    }
+
+    // Auth 상태 감지
+    if (sb) {
+      sb.auth.onAuthStateChange((_event, session) => {
+        updateAuthUI(session?.user ?? null);
+      });
+      sb.auth.getSession().then(({ data: { session } }) => {
+        updateAuthUI(session?.user ?? null);
+      });
+    }
+
+    /* ── 9. 글쓰기 모달 (Supabase insert) ── */
     const writeOverlay = document.getElementById('writeOverlay');
 
     function openWriteModal() {
