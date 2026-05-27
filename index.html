@@ -538,6 +538,101 @@
       color: var(--muted); font-size: 0.85rem;
     }
 
+    /* ── 대시보드 ── */
+    .dash-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .dash-stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition-base);
+    }
+    .dash-stat:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .dash-stat::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .dash-stat.s-notice::before { background: #3b82f6; }
+    .dash-stat.s-qna::before    { background: #10b981; }
+    .dash-stat.s-faq::before    { background: #f59e0b; }
+    .dash-stat.s-check::before  { background: var(--primary-gradient); }
+
+    .dash-stat-icon { font-size: 1.5rem; margin-bottom: 10px; }
+    .dash-stat-val  { font-size: 2rem; font-weight: 800; color: var(--text); letter-spacing: -0.04em; line-height: 1; margin-bottom: 4px; }
+    .dash-stat-label{ font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
+
+    .dash-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .dash-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .dash-card-title {
+      font-size: 0.78rem; font-weight: 700;
+      color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;
+      margin-bottom: 14px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .dash-post-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      cursor: pointer; transition: background 0.2s;
+    }
+    .dash-post-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .dash-post-item:hover .dash-post-title { color: var(--accent); }
+
+    .dash-post-badge {
+      font-size: 0.6rem; font-weight: 700; padding: 2px 7px;
+      border-radius: var(--radius-full); white-space: nowrap; margin-top: 2px; flex-shrink: 0;
+    }
+    .db-notice { background: #dbeafe; color: #1d4ed8; }
+    .db-qna    { background: #d1fae5; color: #065f46; }
+    .db-faq    { background: #fef3c7; color: #92400e; }
+
+    [data-theme="dark"] .db-notice { background: #1e3a5f; color: #93c5fd; }
+    [data-theme="dark"] .db-qna    { background: #072a1a; color: #6ee7b7; }
+    [data-theme="dark"] .db-faq    { background: #3d2a00; color: #fcd34d; }
+
+    .dash-post-title { font-size: 0.85rem; font-weight: 600; color: var(--text); line-height: 1.4; }
+    .dash-post-date  { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+    .dash-req-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 10px; border-radius: var(--radius-md);
+      background: var(--subtle); border: 1px solid var(--border);
+      margin-bottom: 8px; cursor: pointer; transition: var(--transition-base);
+      font-size: 0.83rem; font-weight: 600; color: var(--text);
+    }
+    .dash-req-item:last-child { margin-bottom: 0; }
+    .dash-req-item:hover { background: var(--accent-lt); border-color: var(--border2); transform: translateX(3px); box-shadow: -3px 0 0 var(--accent); }
+
+    @media (max-width: 900px) {
+      .dash-stat-grid { grid-template-columns: repeat(2, 1fr); }
+      .dash-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .dash-stat-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
     /* ── 글쓰기 모달 ── */
     .write-overlay {
       position: fixed; inset: 0;
@@ -765,6 +860,7 @@
     <div class="nav-divider"></div>
     <div class="nav-menu" id="navMenu">
       <button class="nav-item active" data-page="intro">가이드 소개</button>
+      <button class="nav-item" data-page="dashboard">대시보드</button>
       <button class="nav-item" data-page="requirements">요구사항 영역</button>
       <button class="nav-item" data-page="guide">작성 가이드</button>
       <button class="nav-item" data-page="checklist">체크리스트</button>
@@ -1014,6 +1110,57 @@
       <br>
       <div class="checklist-wrap" id="checklistWrap">
         <!-- JS로 렌더링 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       대시보드 페이지
+  ══════════════════════════════════ -->
+  <section class="page" id="page-dashboard">
+    <div class="section-wrap">
+      <h2 class="section-title">📊 대시보드</h2>
+
+      <!-- 통계 카드 -->
+      <div class="dash-stat-grid">
+        <div class="dash-stat s-notice">
+          <div class="dash-stat-icon">📢</div>
+          <div class="dash-stat-val" id="dash-cnt-notice">-</div>
+          <div class="dash-stat-label">공지사항</div>
+        </div>
+        <div class="dash-stat s-qna">
+          <div class="dash-stat-icon">💬</div>
+          <div class="dash-stat-val" id="dash-cnt-qna">-</div>
+          <div class="dash-stat-label">Q&amp;A</div>
+        </div>
+        <div class="dash-stat s-faq">
+          <div class="dash-stat-icon">❓</div>
+          <div class="dash-stat-val" id="dash-cnt-faq">-</div>
+          <div class="dash-stat-label">FAQ</div>
+        </div>
+        <div class="dash-stat s-check">
+          <div class="dash-stat-icon">✅</div>
+          <div class="dash-stat-val" id="dash-cnt-check">-</div>
+          <div class="dash-stat-label">체크리스트 완료율</div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <!-- 최근 게시글 -->
+        <div class="dash-card">
+          <div class="dash-card-title">🕐 최근 게시글</div>
+          <div id="dashRecentPosts"><div class="board-loading">불러오는 중...</div></div>
+        </div>
+
+        <!-- 요구사항 빠른 이동 -->
+        <div class="dash-card">
+          <div class="dash-card-title">📐 요구사항 영역 바로가기</div>
+          <div class="dash-req-item" data-req="기능_사용자관리"><span>🔧</span> 기능 요구사항 — 사용자 관리</div>
+          <div class="dash-req-item" data-req="성능_응답시간"><span>⚡</span> 성능 요구사항 — 응답 시간</div>
+          <div class="dash-req-item" data-req="시스템_서버"><span>🖥️</span> 시스템장비 — 서버 구성</div>
+          <div class="dash-req-item" data-req="인터페이스_외부연계"><span>🔗</span> 인터페이스 — 외부 연계</div>
+          <div class="dash-req-item" data-req="데이터_표준"><span>🗃️</span> 데이터 — 데이터 표준</div>
+        </div>
       </div>
     </div>
   </section>
@@ -1601,7 +1748,78 @@ REQ-DATA-020 백업 및 보존 정책
     updateBadges();
     renderBoard();
 
-    /* ── 7. 글쓰기 모달 (Supabase insert) ── */
+    /* ── 7. 대시보드 ── */
+    async function renderDashboard() {
+      // 게시글 수
+      const tabs = ['notice', 'qna', 'faq'];
+      for (const tab of tabs) {
+        const n = await fetchCount(tab);
+        document.getElementById('dash-cnt-' + tab).textContent = n;
+      }
+
+      // 체크리스트 완료율
+      const allKeys = Object.keys(checkState);
+      if (allKeys.length > 0) {
+        const pct = Math.round(allKeys.filter(k => checkState[k]).length / allKeys.length * 100);
+        document.getElementById('dash-cnt-check').textContent = pct + '%';
+      } else {
+        document.getElementById('dash-cnt-check').textContent = '0%';
+      }
+
+      // 최근 게시글 (전체 탭 최신 5건)
+      const wrap = document.getElementById('dashRecentPosts');
+      try {
+        if (!sb) throw new Error('미연결');
+        const { data, error } = await sb.from('posts')
+          .select('id, title, category, created_at')
+          .order('created_at', { ascending: false })
+          .limit(5);
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+          wrap.innerHTML = '<div class="board-empty" style="padding:20px 0">게시글이 없습니다.</div>';
+          return;
+        }
+
+        const catLabel = { notice: '공지', qna: 'Q&A', faq: 'FAQ' };
+        wrap.innerHTML = data.map(p => {
+          const dateStr = (p.created_at || '').slice(0, 10);
+          return '<div class="dash-post-item" data-tab="' + p.category + '">' +
+            '<span class="dash-post-badge db-' + p.category + '">' + catLabel[p.category] + '</span>' +
+            '<div><div class="dash-post-title">' + escHtml(p.title) + '</div>' +
+            '<div class="dash-post-date">' + dateStr + '</div></div></div>';
+        }).join('');
+
+        // 클릭 시 해당 게시판 탭으로 이동
+        wrap.querySelectorAll('.dash-post-item').forEach(item => {
+          item.addEventListener('click', () => {
+            navItems.forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-page="board"]').classList.add('active');
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-board').classList.add('active');
+            const tab = item.dataset.tab;
+            document.querySelectorAll('.board-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector('.board-tab[data-tab="' + tab + '"]').classList.add('active');
+            currentTab = tab;
+            renderBoard();
+          });
+        });
+      } catch(e) {
+        wrap.innerHTML = '<div class="board-empty" style="padding:20px 0">데이터를 불러오지 못했습니다.</div>';
+      }
+    }
+
+    // 대시보드 요구사항 바로가기
+    document.querySelectorAll('.dash-req-item').forEach(item => {
+      item.addEventListener('click', () => {
+        openReqModal(item.dataset.req);
+      });
+    });
+
+    // 대시보드 탭 클릭 시 렌더링
+    document.querySelector('[data-page="dashboard"]').addEventListener('click', renderDashboard);
+
+    /* ── 8. 글쓰기 모달 (Supabase insert) ── */
     const writeOverlay = document.getElementById('writeOverlay');
 
     function openWriteModal() {
