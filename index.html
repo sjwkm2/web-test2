@@ -879,12 +879,83 @@
     .dash-req-item:last-child { margin-bottom: 0; }
     .dash-req-item:hover { background: var(--accent-lt); border-color: var(--border2); transform: translateX(3px); box-shadow: -3px 0 0 var(--accent); }
 
+    /* ── 프로젝트 카드 ── */
+    .proj-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 8px;
+    }
+    .proj-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition-base);
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .proj-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .proj-header {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .proj-status {
+      font-size: 0.68rem; font-weight: 700; padding: 3px 9px;
+      border-radius: 999px; white-space: nowrap;
+    }
+    .status-active { background: #d1fae5; color: #065f46; }
+    .status-done   { background: #e0e7ff; color: #3730a3; }
+    [data-theme="dark"] .status-active { background: #072a1a; color: #6ee7b7; }
+    [data-theme="dark"] .status-done   { background: #1e1b4b; color: #a5b4fc; }
+    .proj-period { font-size: 0.7rem; color: var(--muted); }
+    .proj-title {
+      font-size: 0.92rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.02em; line-height: 1.4;
+    }
+    .proj-overview {
+      font-size: 0.8rem; color: var(--muted); line-height: 1.65;
+      flex: 1;
+    }
+    .proj-skills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+    .skill-tag {
+      font-size: 0.68rem; font-weight: 600; padding: 3px 8px;
+      border-radius: 6px; white-space: nowrap;
+    }
+    .st-java   { background: #fef3c7; color: #92400e; }
+    .st-spring { background: #d1fae5; color: #065f46; }
+    .st-db     { background: #dbeafe; color: #1e40af; }
+    .st-front  { background: #ede9fe; color: #5b21b6; }
+    .st-js     { background: #fef9c3; color: #713f12; }
+    .st-python { background: #e0f2fe; color: #075985; }
+    .st-ai     { background: #fce7f3; color: #9d174d; }
+    .st-data   { background: #f3f4f6; color: #374151; }
+    .st-cloud  { background: #ecfdf5; color: #065f46; }
+    [data-theme="dark"] .st-java   { background: #3d2a00; color: #fcd34d; }
+    [data-theme="dark"] .st-spring { background: #072a1a; color: #6ee7b7; }
+    [data-theme="dark"] .st-db     { background: #1e3a5f; color: #93c5fd; }
+    [data-theme="dark"] .st-front  { background: #2e1065; color: #c4b5fd; }
+    [data-theme="dark"] .st-js     { background: #2d1f00; color: #fde68a; }
+    [data-theme="dark"] .st-python { background: #0c2a3a; color: #7dd3fc; }
+    [data-theme="dark"] .st-ai     { background: #3a0d22; color: #f9a8d4; }
+    [data-theme="dark"] .st-data   { background: #1f2937; color: #d1d5db; }
+    [data-theme="dark"] .st-cloud  { background: #0d2418; color: #86efac; }
+
+    .dash-section-label {
+      font-size: 0.78rem; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.5px;
+      margin-bottom: 14px; margin-top: 28px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 6px;
+    }
+
     @media (max-width: 900px) {
       .dash-stat-grid { grid-template-columns: repeat(2, 1fr); }
       .dash-grid { grid-template-columns: 1fr; }
+      .proj-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 640px) {
       .dash-stat-grid { grid-template-columns: repeat(2, 1fr); }
+      .proj-grid { grid-template-columns: 1fr; }
     }
 
     /* ── 글쓰기 모달 ── */
@@ -1472,43 +1543,120 @@
       <!-- 통계 카드 -->
       <div class="dash-stat-grid">
         <div class="dash-stat s-notice">
-          <div class="dash-stat-icon">📢</div>
-          <div class="dash-stat-val" id="dash-cnt-notice">-</div>
-          <div class="dash-stat-label">공지사항</div>
+          <div class="dash-stat-icon">🗂️</div>
+          <div class="dash-stat-val">6</div>
+          <div class="dash-stat-label">전체 프로젝트</div>
         </div>
         <div class="dash-stat s-qna">
-          <div class="dash-stat-icon">💬</div>
-          <div class="dash-stat-val" id="dash-cnt-qna">-</div>
-          <div class="dash-stat-label">Q&amp;A</div>
+          <div class="dash-stat-icon">🔄</div>
+          <div class="dash-stat-val">3</div>
+          <div class="dash-stat-label">진행중</div>
         </div>
         <div class="dash-stat s-faq">
-          <div class="dash-stat-icon">❓</div>
-          <div class="dash-stat-val" id="dash-cnt-faq">-</div>
-          <div class="dash-stat-label">FAQ</div>
+          <div class="dash-stat-icon">🏁</div>
+          <div class="dash-stat-val">3</div>
+          <div class="dash-stat-label">완료</div>
         </div>
         <div class="dash-stat s-check">
-          <div class="dash-stat-icon">✅</div>
-          <div class="dash-stat-val" id="dash-cnt-check">-</div>
-          <div class="dash-stat-label">체크리스트 완료율</div>
+          <div class="dash-stat-icon">🆕</div>
+          <div class="dash-stat-val">1</div>
+          <div class="dash-stat-label">이번 달 신규</div>
         </div>
       </div>
 
-      <div class="dash-grid">
-        <!-- 최근 게시글 -->
-        <div class="dash-card">
-          <div class="dash-card-title">🕐 최근 게시글</div>
-          <div id="dashRecentPosts"><div class="board-loading">불러오는 중...</div></div>
+      <!-- 프로젝트 목록 -->
+      <div class="dash-section-label">📁 프로젝트 목록</div>
+      <div class="proj-grid">
+
+        <div class="proj-card">
+          <div class="proj-header">
+            <span class="proj-status status-active">진행중</span>
+            <span class="proj-period">2025.03 ~ 2025.12</span>
+          </div>
+          <div class="proj-title">AA 소프트웨어 개발 프로젝트</div>
+          <div class="proj-overview">공공기관 행정업무 자동화를 위한 웹 기반 전산 시스템 개발. 사용자 관리, 전자결재 프로세스, 통계 대시보드 포함.</div>
+          <div class="proj-skills">
+            <span class="skill-tag st-java">Java</span>
+            <span class="skill-tag st-spring">Spring Boot</span>
+            <span class="skill-tag st-db">Oracle</span>
+            <span class="skill-tag st-front">Vue.js</span>
+          </div>
         </div>
 
-        <!-- 요구사항 빠른 이동 -->
-        <div class="dash-card">
-          <div class="dash-card-title">📐 요구사항 영역 바로가기</div>
-          <div class="dash-req-item" data-req="기능_사용자관리"><span>🔧</span> 기능 요구사항 — 사용자 관리</div>
-          <div class="dash-req-item" data-req="성능_응답시간"><span>⚡</span> 성능 요구사항 — 응답 시간</div>
-          <div class="dash-req-item" data-req="시스템_서버"><span>🖥️</span> 시스템장비 — 서버 구성</div>
-          <div class="dash-req-item" data-req="인터페이스_외부연계"><span>🔗</span> 인터페이스 — 외부 연계</div>
-          <div class="dash-req-item" data-req="데이터_표준"><span>🗃️</span> 데이터 — 데이터 표준</div>
+        <div class="proj-card">
+          <div class="proj-header">
+            <span class="proj-status status-active">진행중</span>
+            <span class="proj-period">2025.06 ~ 2025.11</span>
+          </div>
+          <div class="proj-title">모바일 앱 개발 프로젝트</div>
+          <div class="proj-overview">민원 처리 및 실시간 알림 서비스 제공을 위한 iOS/Android 크로스플랫폼 앱 개발.</div>
+          <div class="proj-skills">
+            <span class="skill-tag st-front">React Native</span>
+            <span class="skill-tag st-js">Node.js</span>
+            <span class="skill-tag st-db">PostgreSQL</span>
+          </div>
         </div>
+
+        <div class="proj-card">
+          <div class="proj-header">
+            <span class="proj-status status-active">진행중</span>
+            <span class="proj-period">2025.05 ~ 2026.02</span>
+          </div>
+          <div class="proj-title">AI 민원 자동 분류 시스템</div>
+          <div class="proj-overview">NLP 기반 자연어 처리를 활용한 민원 자동 분류 및 담당 부서 배정 자동화 시스템 개발.</div>
+          <div class="proj-skills">
+            <span class="skill-tag st-python">Python</span>
+            <span class="skill-tag st-ai">TensorFlow</span>
+            <span class="skill-tag st-python">FastAPI</span>
+            <span class="skill-tag st-db">PostgreSQL</span>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-header">
+            <span class="proj-status status-done">완료</span>
+            <span class="proj-period">2024.01 ~ 2024.09</span>
+          </div>
+          <div class="proj-title">빅데이터 분석 플랫폼 구축</div>
+          <div class="proj-overview">빅데이터 기반 의사결정 지원을 위한 분석 플랫폼 구축 및 경영 시각화 대시보드 개발.</div>
+          <div class="proj-skills">
+            <span class="skill-tag st-python">Python</span>
+            <span class="skill-tag st-data">Spark</span>
+            <span class="skill-tag st-data">Hadoop</span>
+            <span class="skill-tag st-data">Tableau</span>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-header">
+            <span class="proj-status status-done">완료</span>
+            <span class="proj-period">2023.08 ~ 2024.03</span>
+          </div>
+          <div class="proj-title">전자문서 관리 시스템</div>
+          <div class="proj-overview">전자문서 생성·결재·보관 일원화를 위한 통합 문서 관리 시스템 구축. 전자결재 워크플로우 포함.</div>
+          <div class="proj-skills">
+            <span class="skill-tag st-java">Java</span>
+            <span class="skill-tag st-spring">MyBatis</span>
+            <span class="skill-tag st-db">MySQL</span>
+            <span class="skill-tag st-front">JSP</span>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-header">
+            <span class="proj-status status-done">완료</span>
+            <span class="proj-period">2023.03 ~ 2023.12</span>
+          </div>
+          <div class="proj-title">클라우드 인프라 마이그레이션</div>
+          <div class="proj-overview">온프레미스 서버를 AWS 클라우드 환경으로 전환하는 인프라 이전 및 컨테이너화 프로젝트.</div>
+          <div class="proj-skills">
+            <span class="skill-tag st-cloud">AWS</span>
+            <span class="skill-tag st-cloud">Docker</span>
+            <span class="skill-tag st-cloud">Kubernetes</span>
+            <span class="skill-tag st-cloud">Terraform</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -2146,72 +2294,9 @@ REQ-DATA-020 백업 및 보존 정책
     renderBoard();
 
     /* ── 7. 대시보드 ── */
-    async function renderDashboard() {
-      // 게시글 수
-      const tabs = ['notice', 'qna', 'faq'];
-      for (const tab of tabs) {
-        const n = await fetchCount(tab);
-        document.getElementById('dash-cnt-' + tab).textContent = n;
-      }
-
-      // 체크리스트 완료율
-      const allKeys = Object.keys(checkState);
-      if (allKeys.length > 0) {
-        const pct = Math.round(allKeys.filter(k => checkState[k]).length / allKeys.length * 100);
-        document.getElementById('dash-cnt-check').textContent = pct + '%';
-      } else {
-        document.getElementById('dash-cnt-check').textContent = '0%';
-      }
-
-      // 최근 게시글 (전체 탭 최신 5건)
-      const wrap = document.getElementById('dashRecentPosts');
-      try {
-        if (!sb) throw new Error('미연결');
-        const { data, error } = await sb.from('posts')
-          .select('id, title, category, created_at')
-          .order('created_at', { ascending: false })
-          .limit(5);
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-          wrap.innerHTML = '<div class="board-empty" style="padding:20px 0">게시글이 없습니다.</div>';
-          return;
-        }
-
-        const catLabel = { notice: '공지', qna: 'Q&A', faq: 'FAQ' };
-        wrap.innerHTML = data.map(p => {
-          const dateStr = (p.created_at || '').slice(0, 10);
-          return '<div class="dash-post-item" data-tab="' + p.category + '">' +
-            '<span class="dash-post-badge db-' + p.category + '">' + catLabel[p.category] + '</span>' +
-            '<div><div class="dash-post-title">' + escHtml(p.title) + '</div>' +
-            '<div class="dash-post-date">' + dateStr + '</div></div></div>';
-        }).join('');
-
-        // 클릭 시 해당 게시판 탭으로 이동
-        wrap.querySelectorAll('.dash-post-item').forEach(item => {
-          item.addEventListener('click', () => {
-            navItems.forEach(b => b.classList.remove('active'));
-            document.querySelector('[data-page="board"]').classList.add('active');
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-board').classList.add('active');
-            const tab = item.dataset.tab;
-            document.querySelectorAll('.board-tab').forEach(t => t.classList.remove('active'));
-            document.querySelector('.board-tab[data-tab="' + tab + '"]').classList.add('active');
-            currentTab = tab;
-            renderBoard();
-          });
-        });
-      } catch(e) {
-        wrap.innerHTML = '<div class="board-empty" style="padding:20px 0">데이터를 불러오지 못했습니다.</div>';
-      }
+    function renderDashboard() {
+      // 통계는 정적 데이터로 표시 (HTML에 직접 기재)
     }
-
-    // 대시보드 요구사항 바로가기
-    document.querySelectorAll('.dash-req-item').forEach(item => {
-      item.addEventListener('click', () => {
-        openReqModal(item.dataset.req);
-      });
-    });
 
     // 대시보드 탭 클릭 시 렌더링
     document.querySelector('[data-page="dashboard"]').addEventListener('click', renderDashboard);
