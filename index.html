@@ -343,6 +343,135 @@
     }
     .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
+    /* ── 메인 페이지 ── */
+    .main-hero {
+      background: var(--primary-gradient);
+      padding: 72px 28px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .main-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 20% 50%, rgba(255,255,255,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 80% 30%, rgba(61,111,224,0.3) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .main-hero-inner { max-width: 720px; margin: 0 auto; position: relative; z-index: 1; }
+
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .main-hero-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22);
+      color: rgba(255,255,255,0.9); font-size: 0.72rem; font-weight: 700;
+      padding: 5px 16px; border-radius: var(--radius-full);
+      letter-spacing: 0.5px; margin-bottom: 24px;
+      animation: heroIn 0.5s ease 0.05s both;
+    }
+    .main-hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #4ade80; }
+
+    .main-hero-title {
+      font-size: 2.4rem; font-weight: 800; color: #fff;
+      letter-spacing: -0.04em; line-height: 1.25;
+      margin-bottom: 16px;
+      animation: heroIn 0.5s ease 0.15s both;
+    }
+    .main-hero-sub {
+      font-size: 1rem; color: rgba(255,255,255,0.78);
+      line-height: 1.75; margin-bottom: 36px;
+      animation: heroIn 0.5s ease 0.25s both;
+    }
+    .main-hero-btns {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      animation: heroIn 0.5s ease 0.35s both;
+    }
+    .hero-btn-primary {
+      background: #fff; color: var(--navy-800);
+      border: none; border-radius: var(--radius-md);
+      padding: 12px 28px; font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      transition: var(--transition-base); letter-spacing: -0.01em;
+    }
+    .hero-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .hero-btn-ghost {
+      background: rgba(255,255,255,0.12); color: #fff;
+      border: 1px solid rgba(255,255,255,0.3); border-radius: var(--radius-md);
+      padding: 12px 28px; font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      transition: var(--transition-base); letter-spacing: -0.01em;
+    }
+    .hero-btn-ghost:hover { background: rgba(255,255,255,0.22); transform: translateY(-2px); }
+
+    .main-feature-wrap { max-width: 960px; margin: 0 auto; padding: 52px 28px; }
+
+    .main-feature-title {
+      font-size: 1.35rem; font-weight: 800; color: var(--text);
+      text-align: center; margin-bottom: 8px; letter-spacing: -0.025em;
+    }
+    .main-feature-sub {
+      font-size: 0.85rem; color: var(--muted);
+      text-align: center; margin-bottom: 36px;
+    }
+
+    .main-feature-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+      margin-bottom: 48px;
+    }
+
+    .main-feature-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px 24px;
+      box-shadow: var(--shadow-sm); cursor: pointer;
+      transition: var(--transition-base); position: relative; overflow: hidden;
+    }
+    .main-feature-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--primary-gradient); opacity: 0; transition: var(--transition-base);
+    }
+    .main-feature-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+    .main-feature-card:hover::before { opacity: 1; }
+
+    .mf-icon  { font-size: 2rem; margin-bottom: 14px; }
+    .mf-title { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -0.02em; }
+    .mf-desc  { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+
+    .main-info-band {
+      background: var(--accent); border-radius: var(--radius-xl);
+      padding: 32px 40px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      flex-wrap: wrap;
+    }
+    .main-info-band-text .mib-title { font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 6px; letter-spacing: -0.025em; }
+    .main-info-band-text .mib-sub   { font-size: 0.83rem; color: rgba(255,255,255,0.75); line-height: 1.6; }
+    .mib-btn {
+      background: #fff; color: var(--navy-800);
+      border: none; border-radius: var(--radius-md);
+      padding: 11px 26px; font-size: 0.88rem; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      white-space: nowrap; transition: var(--transition-base);
+    }
+    .mib-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+    .nav-brand { cursor: pointer; }
+
+    @media (max-width: 900px) {
+      .main-hero-title { font-size: 1.9rem; }
+      .main-feature-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .main-hero { padding: 52px 20px 60px; }
+      .main-hero-title { font-size: 1.55rem; }
+      .main-feature-grid { grid-template-columns: 1fr; }
+      .main-info-band { padding: 24px; }
+      .main-feature-wrap { padding: 36px 16px; }
+    }
+
     /* ── 가이드 소개 ── */
     #page-intro.active {
       display: flex;
@@ -992,7 +1121,7 @@
     </div>
     <div class="nav-divider"></div>
     <div class="nav-menu" id="navMenu">
-      <button class="nav-item active" data-page="intro">가이드 소개</button>
+      <button class="nav-item" data-page="intro">가이드 소개</button>
       <button class="nav-item" data-page="dashboard">대시보드</button>
       <button class="nav-item" data-page="requirements">요구사항 영역</button>
       <button class="nav-item" data-page="guide">작성 가이드</button>
@@ -1005,9 +1134,78 @@
   </nav>
 
   <!-- ══════════════════════════════════
+       메인 페이지
+  ══════════════════════════════════ -->
+  <section class="page active" id="page-main">
+    <!-- 히어로 -->
+    <div class="main-hero">
+      <div class="main-hero-inner">
+        <div class="main-hero-tag">SWIT 공공SW 실무가이드 기반</div>
+        <div class="main-hero-title">공공SW사업 제안요청서<br>요구사항 상세화 포털</div>
+        <div class="main-hero-sub">
+          발주기관 담당자·PM을 위한 IT개발 가이드.<br>
+          기능·성능·시스템·인터페이스·데이터 5개 영역의 요구사항을<br>
+          체계적으로 작성하고 검토할 수 있습니다.
+        </div>
+        <div class="main-hero-btns">
+          <button class="hero-btn-primary" data-goto="requirements">요구사항 영역 보기</button>
+          <button class="hero-btn-ghost"   data-goto="guide">작성 가이드 보기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 기능 카드 -->
+    <div class="main-feature-wrap">
+      <div class="main-feature-title">주요 기능</div>
+      <div class="main-feature-sub">요구사항 작성부터 검토까지 한 곳에서 관리하세요</div>
+      <div class="main-feature-grid">
+        <div class="main-feature-card" data-goto="requirements">
+          <div class="mf-icon">📐</div>
+          <div class="mf-title">요구사항 영역</div>
+          <div class="mf-desc">기능·성능·시스템장비·인터페이스·데이터 5개 영역별 작성 기준과 예시를 제공합니다.</div>
+        </div>
+        <div class="main-feature-card" data-goto="guide">
+          <div class="mf-icon">📝</div>
+          <div class="mf-title">작성 가이드</div>
+          <div class="mf-desc">현황 파악부터 요구사항 확정까지 6단계 프로세스 가이드를 단계별로 안내합니다.</div>
+        </div>
+        <div class="main-feature-card" data-goto="checklist">
+          <div class="mf-icon">✅</div>
+          <div class="mf-title">체크리스트</div>
+          <div class="mf-desc">기능·성능·인프라·데이터·검토 영역별 체크리스트로 누락 항목 없이 점검합니다.</div>
+        </div>
+        <div class="main-feature-card" data-goto="dashboard">
+          <div class="mf-icon">📊</div>
+          <div class="mf-title">대시보드</div>
+          <div class="mf-desc">게시판 현황과 요구사항 바로가기를 한눈에 확인할 수 있는 통합 대시보드입니다.</div>
+        </div>
+        <div class="main-feature-card" data-goto="board">
+          <div class="mf-icon">💬</div>
+          <div class="mf-title">게시판</div>
+          <div class="mf-desc">공지사항·Q&A·FAQ 게시판으로 담당자 간 정보를 공유하고 질의응답을 관리합니다.</div>
+        </div>
+        <div class="main-feature-card" data-goto="intro">
+          <div class="mf-icon">📘</div>
+          <div class="mf-title">가이드 소개</div>
+          <div class="mf-desc">SWIT 공공SW 실무가이드의 목적, 대상, 활용 방법 등 가이드 전반을 소개합니다.</div>
+        </div>
+      </div>
+
+      <!-- 하단 배너 -->
+      <div class="main-info-band">
+        <div class="main-info-band-text">
+          <div class="mib-title">지금 바로 요구사항 체크리스트를 시작하세요</div>
+          <div class="mib-sub">기능·성능·인프라·데이터·검토 총 30개 항목으로 RFP 완성도를 높이세요.</div>
+        </div>
+        <button class="mib-btn" data-goto="checklist">체크리스트 시작하기</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
        가이드 소개 페이지
   ══════════════════════════════════ -->
-  <section class="page active" id="page-intro">
+  <section class="page" id="page-intro">
     <div class="section-wrap">
       <div class="intro-wrap" style="margin:0 auto">
         <div class="intro-hero">
@@ -1459,13 +1657,30 @@
     });
     document.addEventListener('click', e => { if (!e.target.closest('.topnav')) closeHamburger(); });
 
+    function goToPage(pageId) {
+      navItems.forEach(b => b.classList.remove('active'));
+      const matchBtn = document.querySelector('.nav-item[data-page="' + pageId + '"]');
+      if (matchBtn) matchBtn.classList.add('active');
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById('page-' + pageId);
+      if (target) target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      closeHamburger();
+    }
+
     navItems.forEach(btn => {
-      btn.addEventListener('click', () => {
-        navItems.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('page-' + btn.dataset.page).classList.add('active');
-        closeHamburger();
+      btn.addEventListener('click', () => goToPage(btn.dataset.page));
+    });
+
+    // 로고 클릭 → 메인 페이지
+    document.querySelector('.nav-brand').addEventListener('click', () => goToPage('main'));
+
+    // 메인 페이지 내 버튼들 (data-goto)
+    document.querySelectorAll('[data-goto]').forEach(el => {
+      el.addEventListener('click', () => {
+        const target = el.dataset.goto;
+        goToPage(target);
+        if (target === 'dashboard') renderDashboard();
       });
     });
 
