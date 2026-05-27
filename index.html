@@ -1086,6 +1086,23 @@
       .board-table th:nth-child(4),
       .board-table td:nth-child(4) { display: none; }
     }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--navy-800);
+      color: var(--navy-300);
+      text-align: center;
+      padding: 20px 24px;
+      font-size: 0.78rem;
+      letter-spacing: -0.01em;
+      line-height: 1.8;
+      border-top: 1px solid var(--navy-700);
+    }
+    .site-footer a {
+      color: var(--navy-300);
+      text-decoration: none;
+    }
+    .site-footer a:hover { color: #fff; }
   </style>
 </head>
 <body>
@@ -2380,5 +2397,10 @@ REQ-DATA-020 백업 및 보존 정책
       }
     });
   </script>
+
+  <footer class="site-footer">
+    <div>© 2026 KDN IT개발 가이드. All rights reserved.</div>
+    <div>공공SW사업 제안요청서 작성을 위한 요구사항 상세화 실무가이드</div>
+  </footer>
 </body>
 </html>
